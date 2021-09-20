@@ -10,7 +10,13 @@ export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
   width: 800,
-  height: 600,
+  height: 500,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: true
+    }
+  },
   scene: playGame
 };
 

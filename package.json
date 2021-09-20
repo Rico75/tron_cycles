@@ -1,23 +1,23 @@
 {
-  "name": "phaser3-project-template",
+  "name": "tron_cycles",
   "version": "1.1.0",
-  "description": "A Phaser 3 Project Template",
+  "description": "Tron Cycles in Phaser 3",
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack serve --config webpack/base.js --open Chrome.exe"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/photonstorm/phaser3-project-template.git"
+    "type": "",
+    "url": ""
   },
-  "author": "Taylor Nodell and Richard Davey <rdavey@gmail.com> (http://www.photonstorm.com)",
+  "author": "Rico",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "bugs": {
-    "url": "https://github.com/photonstorm/phaser3-project-template/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/photonstorm/phaser3-project-template#readme",
+  "homepage": "",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
