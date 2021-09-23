@@ -2,10 +2,11 @@ import Phaser from "phaser";
 import {game} from "../index.js"
 
 class playGame extends Phaser.Scene {
-  constructor() {
+  constructor()
+  {
     super("PlayGame");
-    this.yellowLine=[];   //int array
-    this.blueLine=[];     //int array
+    this.yellowLine = [];     //int array
+    this.blueLine   = [];     //int array
   }
   preload()
   {
@@ -14,13 +15,14 @@ class playGame extends Phaser.Scene {
     this.load.image('yellowCycle', 'src/assets/yellowLegacyCycle_21x50.png');
     this.load.image('blueCycle', 'src/assets/blueLegacyCycle_21x50.png');
   }
-  create() {
+  create()
+  {
     console.log(this);
     // set up game objects
-    this.arena        = this.physics.add.image(400, 300, 'arena');
-    this.yellowCycle  = this.physics.add.image(400, 470, 'yellowCycle');
-    this.blueCycle    = this.physics.add.image(400, 30, 'blueCycle');
-    this.cursors      = this.input.keyboard.createCursorKeys();
+    this.arena = this.physics.add.image(400, 300, 'arena');
+    this.yellowCycle = this.physics.add.image(400, 470, 'yellowCycle');
+    this.blueCycle = this.physics.add.image(400, 30, 'blueCycle');
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     // set up wall group
     this.outerWall = this.physics.add.staticGroup({});
@@ -34,17 +36,18 @@ class playGame extends Phaser.Scene {
     this.physics.add.collider(this.blueCycle, this.outerWall);
 
     // check to see if cycle crashed into cycle
-    this.physics.add.overlap(this.blueCycle, this.yellowCycle, function(){
-     // callback funciton
+    this.physics.add.overlap(this.blueCycle, this.yellowCycle, function () {
+      // callback funciton
       return null;
-    }, function(){
+    }, function () {
       // contact function
-      this.onCollision();
+      this.onCollision('BothCycles');
     }, this);
 
 
   }
-  update() {
+  update()
+  {
     // set up direction buttons
     this.downKeyObj = this.input.keyboard.addKey('S');
     this.upKeyObj = this.input.keyboard.addKey('W');
@@ -52,10 +55,9 @@ class playGame extends Phaser.Scene {
     this.rightKeyObj = this.input.keyboard.addKey('D');
 
     /* up arrow for yellowCycle */
-    if (this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown)
-    {
+    if (this.cursors.up.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
       // move cycle direction
-      this.yellowCycle.angle=0;
+      this.yellowCycle.angle = 0;
       this.yellowCycle.y -= 5;
 
       // get cycle coords.
@@ -68,16 +70,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionYellowSelf();
 
       //detect when outerwall is hit
-      if(this.yellowCycle.y <= 15){
-        this.onCollision();
+      if (this.yellowCycle.y <= 15) {
+        this.onCollision('YellowCycle');
       }
     }
 
     /* down arrow for yellowCycle */
-    if (this.cursors.down.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown)
-    {
+    if (this.cursors.down.isDown && !this.cursors.left.isDown && !this.cursors.right.isDown) {
       // move cycle direction
-      this.yellowCycle.angle=180;
+      this.yellowCycle.angle = 180;
       this.yellowCycle.y += 5;
 
       // get cycle coords.
@@ -90,16 +91,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionYellowSelf();
 
       //detect when outerwall is hit
-      if(this.yellowCycle.y >= 485){
-        this.onCollision();
+      if (this.yellowCycle.y >= 485) {
+        this.onCollision('YellowCycle');
       }
     }
 
     /* left arrow for yellowCycle */
-    if (this.cursors.left.isDown && !this.cursors.down.isDown && !this.cursors.up.isDown)
-    {
+    if (this.cursors.left.isDown && !this.cursors.down.isDown && !this.cursors.up.isDown) {
       // move cycle direction
-      this.yellowCycle.angle=270;
+      this.yellowCycle.angle = 270;
       this.yellowCycle.x -= 5;
 
       // get cycle coords.
@@ -112,16 +112,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionYellowSelf();
 
       //detect when outerwall is hit
-      if(this.yellowCycle.x <= 1){
-        this.onCollision();
+      if (this.yellowCycle.x <= 1) {
+        this.onCollision('YellowCycle');
       }
     }
 
     /* right arrow for yellowCycle */
-    if (this.cursors.right.isDown && !this.cursors.down.isDown && !this.cursors.up.isDown)
-    {
+    if (this.cursors.right.isDown && !this.cursors.down.isDown && !this.cursors.up.isDown) {
       // move cycle direction
-      this.yellowCycle.angle=90;
+      this.yellowCycle.angle = 90;
       this.yellowCycle.x += 5;
 
       // get cycle coords.
@@ -135,16 +134,15 @@ class playGame extends Phaser.Scene {
 
       //image is 2x as big as pixesl defined
       ////detect when outerwall is hit
-      if((parseInt(this.yellowCycle.x)/2)+1 >= this.arena.x){
-        this.onCollision();
+      if ((parseInt(this.yellowCycle.x) / 2) + 1 >= this.arena.x) {
+        this.onCollision('YellowCycle');
       }
     }
 
     /* up arrow for blueCycle */
-    if (this.upKeyObj.isDown && !this.leftKeyObj.isDown && !this.rightKeyObj.isDown)
-    {
+    if (this.upKeyObj.isDown && !this.leftKeyObj.isDown && !this.rightKeyObj.isDown) {
       // move cycle direction
-      this.blueCycle.angle=0;
+      this.blueCycle.angle = 0;
       this.blueCycle.y -= 5;
 
       // get cycle coords.
@@ -157,16 +155,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionBlueSelf();
 
       //detect when outerwall is hit
-      if(this.blueCycle.y <= 15){
-        this.onCollision();
+      if (this.blueCycle.y <= 15) {
+        this.onCollision('BlueCycle');
       }
     }
 
     /* down arrow for blueCycle */
-    if (this.downKeyObj.isDown && !this.leftKeyObj.isDown && !this.rightKeyObj.isDown)
-    {
+    if (this.downKeyObj.isDown && !this.leftKeyObj.isDown && !this.rightKeyObj.isDown) {
       // move cycle direction
-      this.blueCycle.angle=180;
+      this.blueCycle.angle = 180;
       this.blueCycle.y += 5;
 
       // get cycle coords.
@@ -179,16 +176,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionBlueSelf();
 
       //detect when outerwall is hit
-      if(this.blueCycle.y >= 485){
-        this.onCollision();
+      if (this.blueCycle.y >= 485) {
+        this.onCollision('BlueCycle');
       }
     }
 
     /* left arrow for blueCycle */
-    if (this.leftKeyObj.isDown && !this.upKeyObj.isDown && !this.downKeyObj.isDown)
-    {
+    if (this.leftKeyObj.isDown && !this.upKeyObj.isDown && !this.downKeyObj.isDown) {
       // move cycle direction
-      this.blueCycle.angle=270;
+      this.blueCycle.angle = 270;
       this.blueCycle.x -= 5;
 
       // get cycle coords.
@@ -201,16 +197,15 @@ class playGame extends Phaser.Scene {
       this.onCollisionBlueSelf();
 
       //detect when outerwall is hit
-      if(this.blueCycle.x <= 1){
-        this.onCollision();
+      if (this.blueCycle.x <= 1) {
+        this.onCollision('BlueCycle');
       }
     }
 
     /* right arrow for blueCycle */
-    if (this.rightKeyObj.isDown && !this.upKeyObj.isDown && !this.downKeyObj.isDown)
-    {
+    if (this.rightKeyObj.isDown && !this.upKeyObj.isDown && !this.downKeyObj.isDown) {
       // move cycle direction
-      this.blueCycle.angle=90;
+      this.blueCycle.angle = 90;
       this.blueCycle.x += 5;
 
       // get cycle coords.
@@ -223,22 +218,25 @@ class playGame extends Phaser.Scene {
       this.onCollisionBlueSelf();
 
       //detect when outerwall is hit
-      if(this.blueCycle.x >= 799){
-        this.onCollision();
+      if (this.blueCycle.x >= 799) {
+        this.onCollision('BlueCycle');
       }
     }
 
   }
-  onCollision()
+  onCollision(cycle)
   {
-    console.log('Crash')
+    console.log('Crash ' + cycle);
+    this.yellowLine = [];
+    this.blueLine   = [];
+    this.scene.restart();
   }
   onCollisionYellowSelf()
   {
     // Check if the head of the snake overlaps with any part of the snake.
     for(let i = 0; i < this.yellowLine.length - 1; i++){
       if(this.yellowCycle.x == this.yellowLine[i].x && this.yellowCycle.y == this.yellowLine[i].y){
-        this.onCollision();
+        this.onCollision('YellowCycle');
       }
     }
   }
@@ -247,7 +245,7 @@ class playGame extends Phaser.Scene {
     // Check if the head of the snake overlaps with any part of the snake.
     for(let i = 0; i < this.blueLine.length - 1; i++){
       if(this.blueCycle.x == this.blueLine[i].x && this.blueCycle.y == this.blueLine[i].y){
-        this.onCollision();
+        this.onCollision('BlueCycle');
       }
     }
   }
